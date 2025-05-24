@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 Developer Project Ideas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .idea-card {
+            transition: all 0.3s ease;
+        }
+        .idea-card:hover {
+            background-color: #f8fafc;
+            transform: translateX(5px);
+        }
+        .search-highlight {
+            background-color: #fef08a;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .search-container {
+            position: relative;
+        }
+        .clear-search {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #9ca3af;
+            transition: color 0.2s;
+        }
+        .clear-search:hover {
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-800 text-white py-12 px-4">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">100 Developer Project Ideas</h1>
+            <p class="text-xl md:text-2xl mb-8">Inspiration for your next coding adventure</p>
+            
+            <div class="max-w-2xl mx-auto relative search-container">
+                <input type="text" id="searchInput" placeholder="Search project ideas..." 
+                       class="w-full px-6 py-4 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <span id="clearSearch" class="clear-search hidden">
+                    <i class="fas fa-times"></i>
+                </span>
+                <button id="searchBtn" class="absolute right-2 top-2 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-8 px-4">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800">Project Categories</h2>
+            <div class="flex space-x-2">
+                <button id="showAll" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Show All</button>
+                <button id="randomBtn" class="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition">
+                    <i class="fas fa-random mr-2"></i>Random Idea
+                </button>
+            </div>
+        </div>
+
+        <div id="categoryContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <!-- Categories will be inserted here by JavaScript -->
+        </div>
+
+        <div id="searchResultsInfo" class="mb-4 hidden">
+            <p class="text-gray-600"><span id="resultCount">0</span> results found for "<span id="searchTermDisplay"></span>"</p>
+        </div>
+
+        <div id="ideasContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Ideas will be inserted here by JavaScript -->
+        </div>
+
+        <div id="randomIdeaModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-lg p-8 max-w-md mx-4 relative">
+                <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="text-xl font-bold mb-2 text-blue-600">Your Random Project Idea</h3>
+                <p id="randomIdeaText" class="text-lg mb-4"></p>
+                <p id="randomIdeaCategory" class="text-sm text-gray-500"></p>
+                <button id="newRandomBtn" class="mt-4 px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition">
+                    <i class="fas fa-random mr-2"></i>Get Another Idea
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-4">Built with ❤️ for developers</p>
+            <div class="flex justify-center space-x-4">
+                <a href="#" class="hover:text-blue-300 transition"><i class="fab fa-github fa-lg"></i></a>
+                <a href="#" class="hover:text-blue-300 transition"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="#" class="hover:text-blue-300 transition"><i class="fab fa-dev fa-lg"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Project data
+        const projectData = [
+            {
+                category: "🌱 Beginner Projects",
+                color: "bg-green-100",
+                textColor: "text-green-800",
+                ideas: [
+                    "To-Do List App", "Budget Tracker", "Weather Forecast App", 
+                    "Pomodoro Timer", "Calculator (Scientific/Basic)", "Unit Converter", 
+                    "Quiz App", "Markdown Editor", "Password Generator", "Digital Clock",
+                    "Notes App with Tags", "Typing Speed Test", "Currency Converter", 
+                    "BMI Calculator", "Habit Tracker", "Color Picker Tool", 
+                    "Text Summarizer", "Tip Calculator", "Countdown Timer", "Loan Calculator"
+                ]
+            },
+            {
+                category: "🧰 Utility & Productivity Tools",
+                color: "bg-blue-100",
+                textColor: "text-blue-800",
+                ideas: [
+                    "File Organizer for Local Storage", "PDF Compressor/Merger", "Resume Builder", 
+                    "Email Validator Tool", "Screenshot Annotation Tool", "Calendar & Event Reminder", 
+                    "Meeting Scheduler with Time Zone Support", "Clipboard History Manager", 
+                    "Invoice Generator", "Voice Notes App"
+                ]
+            },
+            {
+                category: "📱 Mobile App Ideas",
+                color: "bg-purple-100",
+                textColor: "text-purple-800",
+                ideas: [
+                    "Daily Journal with Mood Tracker", "Meditation & Breathing App", 
+                    "Grocery List with Barcode Scanner", "Expense Splitter (e.g., for roommates)", 
+                    "Local Food Finder", "Plant Watering Reminder", "Workout Tracker", 
+                    "Meal Planner with Recipes", "Flashcards App for Study", "Custom Wallpaper Maker"
+                ]
+            },
+            {
+                category: "🛍️ E-commerce & Marketplace",
+                color: "bg-yellow-100",
+                textColor: "text-yellow-800",
+                ideas: [
+                    "Online Thrift Store", "Marketplace for Digital Art", 
+                    "Subscription Box Management Tool", "Peer-to-Peer Rental App", 
+                    "Product Price Tracker", "Restaurant Menu Builder", 
+                    "E-commerce Dashboard with Sales Analytics", "Bidding Platform for Freelancers", 
+                    "Handmade Crafts Marketplace", "Book Exchange Platform"
+                ]
+            },
+            {
+                category: "📚 Educational & Learning Tools",
+                color: "bg-red-100",
+                textColor: "text-red-800",
+                ideas: [
+                    "Language Learning App", "Math Problem Solver with Steps", 
+                    "Coding Playground (like JSFiddle)", "Resume Review Platform", 
+                    "Virtual Whiteboard for Tutors", "AI Essay Grader", 
+                    "Flashcard Quiz Game", "Citation Generator", 
+                    "Learn-to-Code Guided Challenges", "Study Group Scheduler"
+                ]
+            },
+            {
+                category: "🌐 Web & SaaS Platforms",
+                color: "bg-indigo-100",
+                textColor: "text-indigo-800",
+                ideas: [
+                    "URL Shortener with Analytics", "Blogging Platform with Rich Text Editor", 
+                    "Custom Portfolio Builder", "Online Resume Hosting Site", 
+                    "Simple Project Management Board (like Trello)", "Headless CMS", 
+                    "Commenting System for Websites", "API Testing Tool (like Postman lite)", 
+                    "Forum Platform (like Reddit clone)", "Landing Page Builder"
+                ]
+            },
+            {
+                category: "🧠 AI & Machine Learning Ideas",
+                color: "bg-pink-100",
+                textColor: "text-pink-800",
+                ideas: [
+                    "AI Image Caption Generator", "Chatbot for Customer Support", 
+                    "Sentiment Analysis Dashboard", "Fake News Detector", 
+                    "Resume Screening Bot", "Music Genre Classifier", 
+                    "Style Transfer Tool for Images", "Face Recognition Login System", 
+                    "AI-generated Storytelling Assistant", "Voice Cloning App"
+                ]
+            },
+            {
+                category: "🔐 Security & Privacy Tools",
+                color: "bg-gray-100",
+                textColor: "text-gray-800",
+                ideas: [
+                    "Two-Factor Authenticator App", "Encrypted Notes App", 
+                    "Secure File Sharing Platform", "VPN Connection Manager GUI", 
+                    "Password Vault (like Bitwarden clone)", "Keylogger Detection Tool", 
+                    "Facial Recognition Lock for Desktop", "Webcam Access Monitor", 
+                    "Email Spoof Detection Tool", "Cybersecurity Awareness Quiz"
+                ]
+            },
+            {
+                category: "🏗️ Development Tools",
+                color: "bg-orange-100",
+                textColor: "text-orange-800",
+                ideas: [
+                    "Code Snippet Manager", "GitHub Profile README Generator", 
+                    "Static Site Generator", "JSON Formatter & Validator", 
+                    "Docker Dashboard GUI", "Terminal Portfolio Viewer", 
+                    "Regex Tester with Explanations", "Webhook Tester Tool", 
+                    "NPM Package Analyzer", "DevOps Deployment Tracker"
+                ]
+            }
+        ];
+
+        // DOM elements
+        const categoryContainer = document.getElementById('categoryContainer');
+        const ideasContainer = document.getElementById('ideasContainer');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const clearSearch = document.getElementById('clearSearch');
+        const showAllBtn = document.getElementById('showAll');
+        const randomBtn = document.getElementById('randomBtn');
+        const randomIdeaModal = document.getElementById('randomIdeaModal');
+        const randomIdeaText = document.getElementById('randomIdeaText');
+        const randomIdeaCategory = document.getElementById('randomIdeaCategory');
+        const newRandomBtn = document.getElementById('newRandomBtn');
+        const closeModal = document.getElementById('closeModal');
+        const searchResultsInfo = document.getElementById('searchResultsInfo');
+        const resultCount = document.getElementById('resultCount');
+        const searchTermDisplay = document.getElementById('searchTermDisplay');
+
+        // Initialize the page
+        function initPage() {
+            renderCategories();
+            renderAllIdeas();
+            setupEventListeners();
+        }
+
+        // Render category cards
+        function renderCategories() {
+            categoryContainer.innerHTML = '';
+            projectData.forEach(category => {
+                const categoryCard = document.createElement('div');
+                categoryCard.className = `category-card ${category.color} ${category.textColor} p-6 rounded-lg shadow-md cursor-pointer transition duration-300`;
+                categoryCard.innerHTML = `
+                    <h3 class="text-xl font-bold mb-2">${category.category}</h3>
+                    <p class="text-sm">${category.ideas.length} project ideas</p>
+                `;
+                categoryCard.addEventListener('click', () => filterIdeasByCategory(category.category));
+                categoryContainer.appendChild(categoryCard);
+            });
+        }
+
+        // Render all ideas
+        function renderAllIdeas() {
+            ideasContainer.innerHTML = '';
+            searchResultsInfo.classList.add('hidden');
+            
+            let totalIdeas = 0;
+            projectData.forEach(category => {
+                category.ideas.forEach(idea => {
+                    totalIdeas++;
+                    const ideaCard = document.createElement('div');
+                    ideaCard.className = `idea-card ${category.color} ${category.textColor} p-4 rounded-lg shadow-sm fade-in`;
+                    ideaCard.innerHTML = `
+                        <p class="font-medium">${idea}</p>
+                        <span class="text-xs mt-2 inline-block px-2 py-1 rounded-full ${category.textColor} bg-opacity-20">
+                            ${category.category}
+                        </span>
+                    `;
+                    ideasContainer.appendChild(ideaCard);
+                });
+            });
+        }
+
+        // Filter ideas by category
+        function filterIdeasByCategory(categoryName) {
+            const category = projectData.find(cat => cat.category === categoryName);
+            if (!category) return;
+
+            ideasContainer.innerHTML = '';
+            searchResultsInfo.classList.add('hidden');
+            
+            category.ideas.forEach(idea => {
+                const ideaCard = document.createElement('div');
+                ideaCard.className = `idea-card ${category.color} ${category.textColor} p-4 rounded-lg shadow-sm fade-in`;
+                ideaCard.innerHTML = `
+                    <p class="font-medium">${idea}</p>
+                    <span class="text-xs mt-2 inline-block px-2 py-1 rounded-full ${category.textColor} bg-opacity-20">
+                        ${category.category}
+                    </span>
+                `;
+                ideasContainer.appendChild(ideaCard);
+            });
+        }
+
+        // Highlight search terms in text
+        function highlightSearchTerms(text, searchTerm) {
+            if (!searchTerm) return text;
+            
+            const regex = new RegExp(searchTerm, 'gi');
+            return text.replace(regex, match => `<span class="search-highlight">${match}</span>`);
+        }
+
+        // Search functionality
+        function searchIdeas() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            
+            // Show/hide clear button
+            if (searchTerm.length > 0) {
+                clearSearch.classList.remove('hidden');
+            } else {
+                clearSearch.classList.add('hidden');
+                renderAllIdeas();
+                return;
+            }
+            
+            ideasContainer.innerHTML = '';
+            let foundResults = 0;
+            
+            // Search through all categories and ideas
+            projectData.forEach(category => {
+                category.ideas.forEach(idea => {
+                    const ideaLower = idea.toLowerCase();
+                    if (ideaLower.includes(searchTerm)) {
+                        foundResults++;
+                        const highlightedIdea = highlightSearchTerms(idea, searchTerm);
+                        
+                        const ideaCard = document.createElement('div');
+                        ideaCard.className = `idea-card ${category.color} ${category.textColor} p-4 rounded-lg shadow-sm fade-in`;
+                        ideaCard.innerHTML = `
+                            <p class="font-medium">${highlightedIdea}</p>
+                            <span class="text-xs mt-2 inline-block px-2 py-1 rounded-full ${category.textColor} bg-opacity-20">
+                                ${category.category}
+                            </span>
+                        `;
+                        ideasContainer.appendChild(ideaCard);
+                    }
+                });
+            });
+
+            // Update search results info
+            if (foundResults > 0) {
+                searchResultsInfo.classList.remove('hidden');
+                resultCount.textContent = foundResults;
+                searchTermDisplay.textContent = searchInput.value;
+            } else {
+                ideasContainer.innerHTML = `
+                    <div class="col-span-3 text-center py-12">
+                        <i class="fas fa-search fa-3x text-gray-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-600">No results found</h3>
+                        <p class="text-gray-500">Try a different search term</p>
+                    </div>
+                `;
+                searchResultsInfo.classList.add('hidden');
+            }
+        }
+
+        // Clear search
+        function clearSearchInput() {
+            searchInput.value = '';
+            clearSearch.classList.add('hidden');
+            renderAllIdeas();
+            searchInput.focus();
+        }
+
+        // Get random idea
+        function getRandomIdea() {
+            const randomCategory = projectData[Math.floor(Math.random() * projectData.length)];
+            const randomIdea = randomCategory.ideas[Math.floor(Math.random() * randomCategory.ideas.length)];
+            
+            randomIdeaText.textContent = randomIdea;
+            randomIdeaCategory.textContent = randomCategory.category;
+            randomIdeaModal.classList.remove('hidden');
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search button click
+            searchBtn.addEventListener('click', searchIdeas);
+            
+            // Enter key in search input
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    searchIdeas();
+                } else {
+                    // Real-time search with debounce
+                    clearTimeout(this.delay);
+                    this.delay = setTimeout(() => {
+                        searchIdeas();
+                    }, 300);
+                }
+            });
+            
+            // Clear search button
+            clearSearch.addEventListener('click', clearSearchInput);
+            
+            // Input focus to show clear button when text exists
+            searchInput.addEventListener('input', () => {
+                if (searchInput.value.length > 0) {
+                    clearSearch.classList.remove('hidden');
+                } else {
+                    clearSearch.classList.add('hidden');
+                }
+            });
+            
+            // Show all button
+            showAllBtn.addEventListener('click', renderAllIdeas);
+            
+            // Random idea button
+            randomBtn.addEventListener('click', getRandomIdea);
+            newRandomBtn.addEventListener('click', getRandomIdea);
+            
+            // Close modal
+            closeModal.addEventListener('click', () => randomIdeaModal.classList.add('hidden'));
+        }
+
+        // Initialize the page when loaded
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
